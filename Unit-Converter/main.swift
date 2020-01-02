@@ -19,32 +19,56 @@ class Converter {
     
     let centimeterStr = "cm"
     let meterStr = "m"
+    let inchStr = "inch"
     
     init() {
         startConverter()
     }
     
-    func toMeter(_ value: Int) -> Double {
-        return Double(value) / 100
+    func cmToM(_ centimeter: Double) -> Double {
+        return Double(centimeter) / 100
     }
     
-    func toCentimeter(_ value: Double) -> Int {
-        return Int(value * 100)
+    func mToCm(_ meter: Double) -> Double {
+        return meter * 100
+    }
+    
+    func inchToCm(_ inch: Double) -> Double {
+        return inch * 2.54
+    }
+    
+    func cmToInch(_ centimeter: Double) -> Double {
+        return centimeter / 2.54
+    }
+    
+    func convertByInput(_ input: String) {
+        var input = input
+        if input.hasSuffix(centimeterStr) {
+            input.removeSuffix(length: 2)
+            guard let value = Double(input) else { return }
+            print("\(cmToM(value))m")
+        } else if input.hasSuffix(meterStr) {
+            input.removeSuffix(length: 1)
+            guard let value = Double(input) else { return }
+            print("\(mToCm(value))cm")
+        } else if input.hasSuffix(inchStr) {
+            input.removeSuffix(length: 4)
+            guard let value = Double(input) else { return }
+            print("\(inchToCm(value))cm")
+        }
     }
     
     func startConverter() {
-        let input = readLine()!
-        var valueString = input
-
-        if input.hasSuffix(centimeterStr) {
-            valueString.removeSuffix(length: 2)
-            guard let value = Int(valueString) else { return }
-            print("\(toMeter(value))m")
-        } else if input.hasSuffix(meterStr) {
-            valueString.removeSuffix(length: 1)
-            guard let value = Double(valueString) else { return }
-            print("\(toCentimeter(value))cm")
+        var input = "sda"
+        let inputs = readLine()!.split(separator: " ")
+        
+        if inputs.count > 1 {
+            // split to two
+            
+            return
         }
+        
+        convertByInput(input)
     }
 }
 
